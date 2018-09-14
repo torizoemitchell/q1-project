@@ -2,10 +2,32 @@
   margin: 5px;
 } */
 
+/* fonts:
+font-family: 'Parisienne', cursive;
+font-family: 'Homemade Apple', cursive; */
+
+#logo{
+  padding-top: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.title {
+  font-family: 'Homemade Apple', cursive;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
 .card-text {
   font-size: small;
 }
 
 .event-title{
   font-weight: bold;
+}
+
+#footer{
+  font-size: small;
+  color: black;
 }
