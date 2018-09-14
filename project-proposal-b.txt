@@ -1,0 +1,15 @@
+Project Proposal A: Finder: Restaurants Open Late
+Provide a brief description about your project that answers the following questions:
+
+What problem or need does your project solve?
+  Problem:
+    finding a restaurant open late near you when traveling or when the mood strikes, and knowing what kind of food they have to offer.
+  Solution:
+    use google Maps to find your location and find diners near you
+    return which ones are still Open
+    find menus from GrubHub API to display
+Who would be a user of your website?
+  Night Owls or people who often travel to new cities.
+What technologies will you be using?
+  HTML, CSS, JavaScript
+  API's: Google Maps, GrubHub

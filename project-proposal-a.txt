@@ -1,0 +1,15 @@
+Project Proposal A: Wedding Planning Site
+Provide a brief description about your project that answers the following questions:
+
+What problem or need does your project solve?
+  Problem:
+    finding coupons, discounts, and getting ideas for planning.
+  Solution:
+    pull from Etsy's API to get data about top-rated shops selling in the Wedding Category.
+    pull from Groupon to show group-travel coupons for bachelor/bachelorette parties.
+    pull from Eventful to get data about upcoming wedding-expos.
+Who would be a user of your website?
+  Brides and Grooms to be, maids of honor, best men, parents of the bride/groom
+What technologies will you be using?
+  HTML, CSS, JavaScript
+  API's: Etsy, Groupon, Eventful
