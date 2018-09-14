@@ -1,42 +1,50 @@
 //categories: other, fashion, expo, party, networking
 //endpoint: https://www.eventbriteapi.com/v3/events/search/?subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI
 document.addEventListener('DOMContentLoaded', function(event){
-  console.log("ready!")
+  //console.log("ready!")
+
+
+//get data from eventbrite---------------------------------------------
   let url = 'https://www.eventbriteapi.com/v3/events/search/?subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
   axios.get(url)
     .then(function(response){
       console.log(response)
 
       //------------populate cards-----------------
-      //title----------------
-      let events = response.data.events
-      //console.log('events: ', events)
-      let cardTitle = document.getElementsByClassName('event-title')[0]
-      //console.log('cardTitle: ', cardTitle )
-      cardTitle.innerText = events[0].name.text
 
-      //description------------
-      let cardText = document.getElementsByClassName('card-text')[0]
-      //console.log("cardText", cardText)
-      //trim description
-      let description = events[0].description.text.substr(0, 200)
-      cardText.innerText = description
+      //loop to populate cards
+      for(let i = 0; i <= 3; i++){
+        //title----------------
+        let events = response.data.events
+        //console.log('events: ', events)
+        let cardTitle = document.getElementsByClassName('event-title')[i]
+        //console.log('cardTitle: ', cardTitle )
+        cardTitle.innerText = events[i].name.text
 
-      //link---------------------
-      let eventLink = document.getElementById('event-link')
-      //console.log("eventLink: ", eventLink)
-      let moreInfo = events[0].url
-      eventLink.setAttribute('href', moreInfo)
+        //description------------
+        let cardText = document.getElementsByClassName('card-text')[i]
+        //console.log("cardText", cardText)
+        //trim description
+        let description = events[i].description.text.substr(0, 200)
+        cardText.innerText = description
 
-      //image---------------------
-      let cardImage = document.getElementsByClassName('card-img-top')[0]
-      let eventImage = events[0].logo.url
-      cardImage.setAttribute('src', eventImage)
+        //link---------------------
+        let eventLink = document.getElementsByClassName('event-link')[i]
+        console.log("eventLink: ", eventLink)
+        let moreInfo = events[i].url
+        console.log("more info: ", moreInfo)
+        eventLink.setAttribute('href', moreInfo)
 
-      //time-------------------------
-      let cardTime = document.getElementsByClassName('event-time')[0]
-      let eventTime = events[0].start.local
-      cardTime.innerText = eventTime
+        //image---------------------
+        let cardImage = document.getElementsByClassName('card-img-top')[i]
+        let eventImage = events[i].logo.url
+        cardImage.setAttribute('src', eventImage)
+
+        //time-------------------------
+        let cardTime = document.getElementsByClassName('event-time')[i]
+        let eventTime = events[i].start.local
+        cardTime.innerText = eventTime
+      }
     })
 
 
