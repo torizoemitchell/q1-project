@@ -10,7 +10,7 @@ font-family: 'Scheherazade', serif;
 font-family: 'Forum', cursive;*/
 
 #logo{
-  padding-top: 10px;
+  padding-top: 20px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -29,6 +29,19 @@ font-family: 'Forum', cursive;*/
   padding-bottom: 50px;
 }
 
+#countdown{
+  text-align: center;
+  padding: 30px;
+}
+
+.section-description {
+  font-family: 'Scheherazade', serif;
+  font-size: 30px;
+}
+
+#location {
+  padding-bottom: 30px;
+}
 .card{
   min-height:
 }
