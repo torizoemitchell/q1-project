@@ -38,6 +38,13 @@ font-family: 'Forum', cursive;*/
   font-family: 'Montserrat', sans-serif;
 }
 
+#timer {
+  text-align: center;
+  font-family: 'Forum', cursive;
+  font-size: 40px;
+
+}
+
 .section-description {
   font-family: 'Montserrat', sans-serif;
   font-size: 28px;

@@ -6,25 +6,59 @@ document.addEventListener('DOMContentLoaded', function(event){
 //timer---------------------------------------------------
   let countDownButton = document.getElementsByClassName('count-down')[0]
   countDownButton.addEventListener('click', startCountDown)
+
+
   function startCountDown(event){
     event.preventDefault()
     //set date we're counting down to
-    let countDownTo = document.getElementsByClassName('your-date')[0].value
-    console.log("countdownTo", countDownTo)
+    //given format: 2018-09-29T15:00
+    //desired format: 01 Jan 1970 00:00:00 GMT
+    let givenDate = document.getElementsByClassName('your-date')[0].value
+    console.log("givenDate", givenDate)
+    //change to proper format:
+    let countDownYear = givenDate.substring(0,4)
+    let monthLookup = {
+      '01': 'Jan',
+      '02': 'Feb',
+      '03': 'Mar',
+      '04': 'Apr',
+      '05': 'May',
+      '06': 'Jun',
+      '07': 'Jul',
+      '08': 'Aug',
+      '09': 'Sep',
+      '10': 'Oct',
+      '11': 'Nov',
+      '12': 'Dec'}
+    let countDownMonth = monthLookup[givenDate.substring(5,7)]
+    let countDownDay = givenDate.substring(8,10)
+    let countDownHour = givenDate.substring(11)
+
+    let countDownTo = `${countDownDay} ${countDownMonth} ${countDownYear} ${countDownHour}:00`
+    console.log('countDownTo: ', countDownTo)
+    let countDownToInMS = Date.parse(countDownTo)
     //update the timer every 1 second
-    // let timerInterval = setInterval(function(){
-    //   //get today's date and time
-    //   let now = new Date.getTime()
-    //   let distance = countDownTo - now
-    //   // Time calculations for days, hours, minutes and seconds
-    //   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    //   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    //   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    //   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    //
-    //   document.getElementById('timer').innerText = days + "d " + hours + "h "
-    // + minutes + "m " + seconds + "s ";
-    // })
+    let timerInterval = setInterval(function(){
+      //get today's date and time
+      //format: Mon Sep 17 2018 15:53:43 GMT-0600 (Mountain Daylight Time)
+      let now = new Date().getTime()
+      console.log("now: ", now)
+      let distance = countDownToInMS - now
+      console.log('distance: ', distance)
+
+      //calculate time until wedding:
+      let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      //display
+      let displayTimer = document.getElementById('timer')
+      console.log('displayTimer: ', displayTimer)
+
+      displayTimer.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`
+
+  }, 1000)
   }
 
 
@@ -77,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function(event){
           let eventYear = eventTime.substring(0,4)
           let months = ['none','Jan','Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
           let eventDay = eventTime.substring(8,10)
+          //Bug HERE
           let eventMonth = eventTime.substring(6,7)
           let eventHour = eventTime.substring(11,16)
           cardTime.innerText = `${months[eventMonth]} ${eventDay}, ${eventYear} ${eventHour}`
@@ -84,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function(event){
       })
     }
     populateCards(defaultUrl)
+
 
   // ----filter location----------------------------------------------
   let filterLocationsButton = document.getElementsByClassName('filter-results')[0]
