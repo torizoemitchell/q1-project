@@ -4,7 +4,10 @@
 
 /* fonts:
 font-family: 'Parisienne', cursive;
-font-family: 'Homemade Apple', cursive; */
+font-family: 'Homemade Apple', cursive;
+font-family: 'Tajawal', sans-serif;
+font-family: 'Scheherazade', serif;
+font-family: 'Forum', cursive;*/
 
 #logo{
   padding-top: 10px;
@@ -12,6 +15,13 @@ font-family: 'Homemade Apple', cursive; */
   margin-left: auto;
   margin-right: auto;
 }
+
+.container{
+  flex-wrap: wrap;
+  border: 5px solid black;
+  justify-content: space-between;
+}
+
 .title {
   font-family: 'Homemade Apple', cursive;
   text-align: center;
@@ -19,12 +29,21 @@ font-family: 'Homemade Apple', cursive; */
   padding-bottom: 50px;
 }
 
+.card{
+  min-height:
+}
+
 .card-text {
   font-size: small;
+  /* font-family: 'Tajawal', sans-serif; */
+  font-family: 'Scheherazade', serif;
 }
 
 .event-title{
   font-weight: bold;
+  font-size: large;
+  /* font-family: 'Scheherazade', serif; */
+  font-family: 'Forum', cursive;
 }
 
 #footer{

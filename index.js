@@ -30,9 +30,7 @@ document.addEventListener('DOMContentLoaded', function(event){
 
         //link---------------------
         let eventLink = document.getElementsByClassName('event-link')[i]
-        console.log("eventLink: ", eventLink)
         let moreInfo = events[i].url
-        console.log("more info: ", moreInfo)
         eventLink.setAttribute('href', moreInfo)
 
         //image---------------------
@@ -46,6 +44,11 @@ document.addEventListener('DOMContentLoaded', function(event){
         cardTime.innerText = eventTime
       }
     })
+
+    // ----filter location----------------------------------------------
+    let filterLocationsButton = document.getElementsByClassName('filter-results')[0]
+
+    filterLocationsButton.addEventListener('click', )
 
 
 

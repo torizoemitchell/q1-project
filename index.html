@@ -14,9 +14,32 @@
     <img src='imgs/wedding-rings.png'id='logo'>
     <h1 class='title'>the bride guide</h1>
 
-    <!-- <div id='eventbrite' class='container'> -->
-      <div class='row'>
+    <form id='countdown'>
+      Your Wedding Date:
+      <input type='datetime-local' name='your-date'>
+      <input type="submit" value="Countdown!">
+    </form>
 
+    <div id='eventbrite' class='container'>
+
+      <form id='location'>
+        Nearest Major City:
+        <select name="cars">
+          <option value="Denver">Denver, CO</option>
+          <option value="San-Francisco">San Francisco, CA</option>
+          <option value="New-York">New York, NY</option>
+          <option value="Los-Angeles">Los Angeles, CA</option>
+          <option value="Washington-DC">Washington, DC</option>
+          <option value="Atlanta">Atlanta, GA</option>
+          <option value="Chicago">Chicago, IL</option>
+          <option value="Boston">Boston, MA</option>
+          <option value="Philadelphia">Philadelphia, PA</option>
+          <option value="Miami">Miami, FL</option>
+        </select>
+        <input type="submit" class='filter-results' value="Filter Results">
+      </form>
+
+      <div class='row'>
         <!-- first card -->
         <div class='col-md-3'>
           <div class="card" style="width: 18rem;">
@@ -71,7 +94,7 @@
 
 
       </div>
-    <!-- </div> -->
+    </div>
 
 
     <!-- create a footer -->
