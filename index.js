@@ -12,6 +12,19 @@ document.addEventListener('DOMContentLoaded', function(event){
     let countDownTo = document.getElementsByClassName('your-date')[0].value
     console.log("countdownTo", countDownTo)
     //update the timer every 1 second
+    // let timerInterval = setInterval(function(){
+    //   //get today's date and time
+    //   let now = new Date.getTime()
+    //   let distance = countDownTo - now
+    //   // Time calculations for days, hours, minutes and seconds
+    //   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    //   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    //   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    //   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    //
+    //   document.getElementById('timer').innerText = days + "d " + hours + "h "
+    // + minutes + "m " + seconds + "s ";
+    // })
   }
 
 
@@ -29,8 +42,7 @@ document.addEventListener('DOMContentLoaded', function(event){
   function populateCards(url){
     axios.get(url)
       .then(function(response){
-        console.log(response)
-
+      console.log(response)
         //------------populate cards-----------------
 
         //loop to populate cards
@@ -62,7 +74,12 @@ document.addEventListener('DOMContentLoaded', function(event){
           //time-------------------------
           let cardTime = document.getElementsByClassName('event-time')[i]
           let eventTime = events[i].start.local
-          cardTime.innerText = eventTime
+          let eventYear = eventTime.substring(0,4)
+          let months = ['none','Jan','Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+          let eventDay = eventTime.substring(8,10)
+          let eventMonth = eventTime.substring(6,7)
+          let eventHour = eventTime.substring(11,16)
+          cardTime.innerText = `${months[eventMonth]} ${eventDay}, ${eventYear} ${eventHour}`
         }
       })
     }
