@@ -52,13 +52,13 @@ document.addEventListener('DOMContentLoaded', function(event){
           //console.log('events: ', events)
           let cardTitle = document.getElementsByClassName('event-title')[i]
           //console.log('cardTitle: ', cardTitle )
-          cardTitle.innerText = events[i].name.text
+          cardTitle.innerText = events[i].name.text.substring(0,80)
 
           //description------------
           let cardText = document.getElementsByClassName('card-text')[i]
           //console.log("cardText", cardText)
           //trim description
-          let description = events[i].description.text.substr(0, 200)
+          let description = events[i].description.text.substr(0, 100)
           cardText.innerText = description
 
           //link---------------------

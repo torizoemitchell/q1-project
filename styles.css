@@ -16,10 +16,13 @@ font-family: 'Forum', cursive;*/
   margin-right: auto;
 }
 
-.container{
+.container {
   flex-wrap: wrap;
-  border: 5px solid black;
+  border: 2.5px solid black;
   justify-content: space-between;
+  padding-right: 25px;
+  padding-left: 25px;
+  padding-bottom: 25px
 }
 
 .title {
@@ -46,7 +49,7 @@ font-family: 'Forum', cursive;*/
   font-family: 'Montserrat', sans-serif;
 }
 .card{
-  min-height:
+  padding-top: 10px;
 }
 
 .card-text {
@@ -55,9 +58,12 @@ font-family: 'Forum', cursive;*/
   font-family: 'Montserrat', sans-serif;
 }
 
+.card-body {
+  padding: .5rem;
+}
 .event-title{
   font-weight: bold;
-  font-size: large;
+  font-size: medium;
   /* font-family: 'Scheherazade', serif; */
   font-family: 'Montserrat', sans-serif;
 }
@@ -65,4 +71,6 @@ font-family: 'Forum', cursive;*/
 #footer{
   font-size: small;
   color: black;
+  margin: 50px;
+  text-align: center;
 }
