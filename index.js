@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', function(event){
 
 
 //get data from eventbrite---------------------------------------------
-  let url = 'https://www.eventbriteapi.com/v3/events/search/?subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
+//populate cards will populate cards with the given url. change the url to populate with location-specific data
+  let defaultUrl = 'https://www.eventbriteapi.com/v3/events/search/?sort_by=distance&location.address=Denver&subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
+
+function populateCards(url){
   axios.get(url)
     .then(function(response){
       console.log(response)
@@ -44,11 +47,22 @@ document.addEventListener('DOMContentLoaded', function(event){
         cardTime.innerText = eventTime
       }
     })
+  }
+  populateCards(defaultUrl)
 
-    // ----filter location----------------------------------------------
-    let filterLocationsButton = document.getElementsByClassName('filter-results')[0]
+// ----filter location----------------------------------------------
+let filterLocationsButton = document.getElementsByClassName('filter-results')[0]
 
-    filterLocationsButton.addEventListener('click', )
+filterLocationsButton.addEventListener('click', filterLocation)
+
+function filterLocation(event){
+  event.preventDefault()
+  let nearestMajorCity = document.getElementsByClassName('nearest-major-city')[0].value
+  //determine new URL based on input
+  filteredUrl = 'https://www.eventbriteapi.com/v3/events/search/?sort_by=distance&location.address=' + nearestMajorCity + '&subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
+  //call populate cards with new url
+  populateCards(filteredUrl)
+}
 
 
 
