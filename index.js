@@ -3,15 +3,26 @@
 document.addEventListener('DOMContentLoaded', function(event){
   //console.log("ready!")
 
-//get data from eventbrite---------------------------------------------
+//timer---------------------------------------------------
+  let countDownButton = document.getElementsByClassName('count-down')[0]
+  countDownButton.addEventListener('click', startCountDown)
+  function startCountDown(event){
+    event.preventDefault()
+    //set date we're counting down to
+    let countDownTo = document.getElementsByClassName('your-date')[0].value
+    console.log("countdownTo", countDownTo)
+    //update the timer every 1 second
+  }
 
+
+
+//get data from eventbrite---------------------------------------------
   //get data from localStorage
   if(localStorage.getItem('locationUrl') === null){
     var defaultUrl = 'https://www.eventbriteapi.com/v3/events/search/?sort_by=distance&location.address=Denver&subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
   } else{
     var defaultUrl = localStorage.getItem('locationUrl')
     document.getElementsByClassName('nearest-major-city')[0].value = localStorage.getItem('nearestMajorCity')
-    console.log('got local Storage data')
   }
 
   //populate cards will populate cards with the given url. change the url to populate with location-specific data
