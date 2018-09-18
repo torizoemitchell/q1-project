@@ -15,16 +15,21 @@
   <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/> -->
   </head>
   <body>
-    <img src='imgs/wedding-rings.png'id='logo'>
+    <img src='imgs/wedding-rings2.png'id='logo'>
     <h1 class='title'>bride guide</h1>
 
     <form id='countdown'>
       Your Wedding Date:
       <input type='datetime-local' class='your-date' required>
-      <button type="button" class="btn-sm btn-outline-dark count-down">Countdown!</button>
+      <button type="submit" class="btn-sm btn-outline-dark count-down">Countdown!</button>
     </form>
 
-    <p id='timer'>00d 00h 00m 00s</p>
+
+    <p id='timer'>
+      <img src='imgs/dove-left.png'id='dove-left'>
+      00d 00h 00m 00s
+      <img src='imgs/dove-right.png'id='dove-right'>
+    </p>
 
     <div id='eventbrite' class='container'>
       <p class='section-description'>Bridal Events & Wedding Expos: </p>
@@ -102,28 +107,32 @@
 
     <!-- jsonp -->
     <script type="text/javascript">
+      var etsyData
       function getData(data) {
         if (data.ok) {
           // do something with the data here
-          console.log(data)
+          etsyData = data
+          console.log('etsyData1: ', etsyData)
+          return data;
         } else {
             alert(data.error);
         }
       }
-</script>
-    <script src="https://openapi.etsy.com/v2/shops.js?category_id=68887494&callback=getData&api_key=oiatbz455mez7qs7sm7yh0wc"></script>
+    </script>
+    <!-- jsonp -->
+    <script src="https://openapi.etsy.com/v2/featured_treasuries/listings.js?category_id=68887494&callback=getData&api_key=oiatbz455mez7qs7sm7yh0wc"></script>
 
 
     <script src='index.js'></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 
     <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-    <!-- jsonp -->
-    <script src="https://openapi.etsy.com/v2/featured_treasuries/listings.js?category_id=68887494&callback=getData&api_key=oiatbz455mez7qs7sm7yh0wc"></script>
+
 
     <!-- card carosel -->
   <!-- <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>

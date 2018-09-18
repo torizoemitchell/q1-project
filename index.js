@@ -151,11 +151,11 @@ document.addEventListener('DOMContentLoaded', function(event){
     localStorage.setItem('nearestMajorCity', nearestMajorCity)
   }
 
-  // let etsyEndpoint = 'https://openapi.etsy.com/v2/shops/?api_key=oiatbz455mez7qs7sm7yh0wc'
-  // axios.get(etsyEndpoint)
-  // .then(function(response){
-  //   console.log(response)
-  // })
+//get data from Etsy---------------------------------------------------------------
+  console.log("etsydata2: ", etsyData)
+  console.log('type of etsyData: ', (typeof etsyData))
+
+
 
 
 
