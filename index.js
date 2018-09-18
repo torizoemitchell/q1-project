@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function(event){
   function populateCards(url){
     axios.get(url)
       .then(function(response){
-      console.log(response)
         //------------populate cards-----------------
 
         //loop to populate cards
@@ -109,12 +108,24 @@ document.addEventListener('DOMContentLoaded', function(event){
           let cardTime = document.getElementsByClassName('event-time')[i]
           let eventTime = events[i].start.local
           let eventYear = eventTime.substring(0,4)
-          let months = ['none','Jan','Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+          let monthLookup = {
+            '01': 'Jan',
+            '02': 'Feb',
+            '03': 'Mar',
+            '04': 'Apr',
+            '05': 'May',
+            '06': 'Jun',
+            '07': 'Jul',
+            '08': 'Aug',
+            '09': 'Sep',
+            '10': 'Oct',
+            '11': 'Nov',
+            '12': 'Dec'}
           let eventDay = eventTime.substring(8,10)
-          //Bug HERE
-          let eventMonth = eventTime.substring(6,7)
+          //Bug here?
+          let eventMonth = eventTime.substring(5,7)
           let eventHour = eventTime.substring(11,16)
-          cardTime.innerText = `${months[eventMonth]} ${eventDay}, ${eventYear} ${eventHour}`
+          cardTime.innerText = `${monthLookup[eventMonth]} ${eventDay}, ${eventYear} ${eventHour}`
         }
       })
     }
@@ -139,6 +150,13 @@ document.addEventListener('DOMContentLoaded', function(event){
     console.log("nearestMajorCity: ", nearestMajorCity)
     localStorage.setItem('nearestMajorCity', nearestMajorCity)
   }
+
+  // let etsyEndpoint = 'https://openapi.etsy.com/v2/shops/?api_key=oiatbz455mez7qs7sm7yh0wc'
+  // axios.get(etsyEndpoint)
+  // .then(function(response){
+  //   console.log(response)
+  // })
+
 
 
 })

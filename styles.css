@@ -40,15 +40,20 @@ font-family: 'Forum', cursive;*/
 
 #timer {
   text-align: center;
-  font-family: 'Forum', cursive;
+  font-family: 'Homemade Apple', cursive;
   font-size: 40px;
 
+}
+
+.nearest-major-city {
+  background-color: white;
 }
 
 .section-description {
   font-family: 'Montserrat', sans-serif;
   font-size: 28px;
   font-weight: bold;
+  padding-top: 10px;
 }
 
 #location {

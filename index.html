@@ -21,13 +21,13 @@
     <form id='countdown'>
       Your Wedding Date:
       <input type='datetime-local' class='your-date' required>
-      <input type="submit" class='count-down' value="Countdown!">
+      <button type="button" class="btn-sm btn-outline-dark count-down">Countdown!</button>
     </form>
 
     <p id='timer'>00d 00h 00m 00s</p>
 
     <div id='eventbrite' class='container'>
-      <p class='section-description'> Find bridal events and wedding expos near you: </p>
+      <p class='section-description'>Bridal Events & Wedding Expos: </p>
       <form id='location'>
         Nearest Major City:
         <select class="nearest-major-city">
@@ -42,7 +42,7 @@
           <option value="Philadelphia">Philadelphia, PA</option>
           <option value="Miami">Miami, FL</option>
         </select>
-        <input type="submit" class='filter-results' value="Filter Results">
+        <button type="button" class="btn-sm btn-outline-dark filter-results">Filter Results</button>
       </form>
 
       <div class='row'>
@@ -100,6 +100,19 @@
       <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
     </footer>
 
+    <!-- jsonp -->
+    <script type="text/javascript">
+      function getData(data) {
+        if (data.ok) {
+          // do something with the data here
+          console.log(data)
+        } else {
+            alert(data.error);
+        }
+      }
+</script>
+    <script src="https://openapi.etsy.com/v2/shops.js?category_id=68887494&callback=getData&api_key=oiatbz455mez7qs7sm7yh0wc"></script>
+
 
     <script src='index.js'></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -108,6 +121,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <!-- jsonp -->
+    <script src="https://openapi.etsy.com/v2/featured_treasuries/listings.js?category_id=68887494&callback=getData&api_key=oiatbz455mez7qs7sm7yh0wc"></script>
 
     <!-- card carosel -->
   <!-- <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
