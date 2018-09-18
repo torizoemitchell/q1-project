@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function(event){
   //add event Listener to countdown button
   let countDownForm = document.getElementById('countdown')
 
-  let countDownButton = document.getElementsByClassName('count-down')[0]
+  // let countDownButton = document.getElementsByClassName('count-down')[0]
 
   countDownForm.addEventListener('submit', startCountDown)
 
