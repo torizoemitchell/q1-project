@@ -1,5 +1,3 @@
-//categories: other, fashion, expo, party, networking
-//endpoint: https://www.eventbriteapi.com/v3/events/search/?subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI
 //global functions that need to be availale for test script to access-------------------------------------------------
 function givenDateToUnixTime (givenDate){
   let countDownYear = givenDate.substring(0,4)
@@ -32,23 +30,13 @@ let monthLookup = {
   '11': 'Nov',
   '12': 'Dec'}
 
+//When the page is loaded, begin DOM manipulation
 document.addEventListener('DOMContentLoaded', function(event){
-  //console.log("ready!")
-  //globals-----------------------------------------------
 
-//timer---------------------------------------------------
-  //check to see if a date is stored in local storage, if so, start countown
-  if(localStorage.getItem('countdown') !== null){
-    //start countdown
-  }
-
+  //timer---------------------------------------------------
   //add event Listener to countdown button
   let countDownForm = document.getElementById('countdown')
-
-  // let countDownButton = document.getElementsByClassName('count-down')[0]
-
   countDownForm.addEventListener('submit', startCountDown)
-
   function startCountDown(event){
     event.preventDefault()
     //set date we're counting down to
@@ -77,9 +65,9 @@ document.addEventListener('DOMContentLoaded', function(event){
   }
 
 
-//get data from eventbrite---------------------------------------------
-
-  //get data from localStorage
+  //****EVENTBRITE SECTION----------------------------------
+  //
+  // check to see if there is data from localStorage--------
   if(localStorage.getItem('locationUrl') === null){
     var defaultUrl = 'https://www.eventbriteapi.com/v3/events/search/?sort_by=distance&location.address=Denver&subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
   } else{
@@ -87,24 +75,39 @@ document.addEventListener('DOMContentLoaded', function(event){
     document.getElementsByClassName('nearest-major-city')[0].value = localStorage.getItem('nearestMajorCity')
   }
 
-  //populate cards will populate cards with the given url. change the url to populate with location-specific data
-  function populateCards(url){
+  //filter location-----------------------------------------
+  let filterLocationsButton = document.getElementsByClassName('filter-results')[0]
+
+  filterLocationsButton.addEventListener('click', filterLocation)
+
+  function filterLocation(event){
+    event.preventDefault()
+    let nearestMajorCity =
+    document.getElementsByClassName('nearest-major-city')[0].value
+    //determine new URL based on input
+    let filteredUrl = 'https://www.eventbriteapi.com/v3/events/search/?sort_by=distance&location.address=' + nearestMajorCity + '&subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
+    //call populate cards with new url
+    populateEventBriteCards(filteredUrl)
+    //save location info in local storage
+    localStorage.setItem('locationUrl', filteredUrl)
+    console.log("nearestMajorCity: ", nearestMajorCity)
+    localStorage.setItem('nearestMajorCity', nearestMajorCity)
+  }
+
+  //populate Eventbrite cards with default url--------------
+  populateEventBriteCards(defaultUrl)
+  function populateEventBriteCards(url){
     axios.get(url)
       .then(function(response){
         //loop to populate the first 4 cards
         for(let i = 0; i <= 3; i++){
-          //title----------------
           let events = response.data.events
-          let cardTitle = document.getElementsByClassName('event-title eventbrite')[i]
-          //console.log('cardTitle: ', cardTitle )
-          cardTitle.innerText = events[i].name.text.substring(0,80)
+          //title----------------
+          populateCardTitle(i, events[i].name.text.substring(0,80), 'event-title eventbrite')
 
           //description------------
-          let cardText = document.getElementsByClassName('card-text')[i]
-          //console.log("cardText", cardText)
-          //trim description
-          let description = events[i].description.text.substr(0, 100)
-          cardText.innerText = description
+          populateCardDescription(i, events[i].description.text, 'card-text eventbrite')
+
 
           //link---------------------
           let eventLink = document.getElementsByClassName('event-link')[i]
@@ -128,32 +131,38 @@ document.addEventListener('DOMContentLoaded', function(event){
         }
       })
     }
-    populateCards(defaultUrl)
-    function populateCardTitle(desiredInnerText){
 
+
+    //use populate functions in a for loop, i is the iterator
+    function populateCardTitle(i, desiredInnerText, classname){
+      let cardTitle = document.getElementsByClassName(classname)[i]
+      cardTitle.innerText = desiredInnerText.substring(0,50)
     }
 
-  // ----filter location----------------------------------------------
-  let filterLocationsButton = document.getElementsByClassName('filter-results')[0]
+    function populateCardDescription(i, desiredInnerText, classname){
+      let cardText = document.getElementsByClassName(classname)[i]
+      //console.log("cardText", cardText)
+      //trim description
+      cardText.innerText = desiredInnerText.substr(0, 100)
+    }
 
-  filterLocationsButton.addEventListener('click', filterLocation)
 
-  function filterLocation(event){
-    event.preventDefault()
-    let nearestMajorCity =
-    document.getElementsByClassName('nearest-major-city')[0].value
-    //determine new URL based on input
-    let filteredUrl = 'https://www.eventbriteapi.com/v3/events/search/?sort_by=distance&location.address=' + nearestMajorCity + '&subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
-    //call populate cards with new url
-    populateCards(filteredUrl)
-    //save location info in local storage
-    localStorage.setItem('locationUrl', filteredUrl)
-    console.log("nearestMajorCity: ", nearestMajorCity)
-    localStorage.setItem('nearestMajorCity', nearestMajorCity)
+  //****ETSY SECTION--------------------------------------
+  //
+  console.log('etsyData: ', etsyData)
+  // poplulate Etsy data--------------------------
+  populateEtsyCards(etsyData)
+  function populateEtsyCards(etsyData){
+    //loop through cards to populate
+    for(let i = 0; i <= 3; i++){
+      let listings = etsyData.results
+      //title
+      populateCardTitle(i, listings[i].title, 'event-title etsy')
+      //description
+      populateCardDescription(i, listings[i].description, 'card-text etsy')
+    }
   }
 
-//get data from Etsy---------------------------------------------------------------
-  console.log('etsyData: ', etsyData)
 
 
 

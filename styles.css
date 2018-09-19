@@ -52,6 +52,9 @@ font-family: 'Forum', cursive;*/
 
 }
 
+#location {
+  text-align: center;
+}
 .nearest-major-city {
   background-color: white;
 }
