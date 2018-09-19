@@ -30,6 +30,22 @@ let monthLookup = {
   '11': 'Nov',
   '12': 'Dec'}
 
+  //use populate functions in a for loop, i is the iterator
+  function populateCardTitle(i, desiredInnerText, classname){
+    let cardTitle = document.getElementsByClassName(classname)[i]
+    cardTitle.innerText = desiredInnerText.substring(0,50)
+  }
+
+  function populateCardDescription(i, desiredInnerText, classname){
+    let cardText = document.getElementsByClassName(classname)[i]
+    cardText.innerText = desiredInnerText.substr(0, 100)
+  }
+
+  function populateCardLink(i, link, classname){
+    let eventLink = document.getElementsByClassName(classname)[i]
+    eventLink.setAttribute('href', link)
+  }
+
 //When the page is loaded, begin DOM manipulation
 document.addEventListener('DOMContentLoaded', function(event){
 
@@ -131,41 +147,30 @@ document.addEventListener('DOMContentLoaded', function(event){
       })
     }
 
-
-    //use populate functions in a for loop, i is the iterator
-    function populateCardTitle(i, desiredInnerText, classname){
-      let cardTitle = document.getElementsByClassName(classname)[i]
-      cardTitle.innerText = desiredInnerText.substring(0,50)
-    }
-
-    function populateCardDescription(i, desiredInnerText, classname){
-      let cardText = document.getElementsByClassName(classname)[i]
-      //console.log("cardText", cardText)
-      //trim description
-      cardText.innerText = desiredInnerText.substr(0, 100)
-    }
-
-    function populateCardLink(i, link, classname){
-      let eventLink = document.getElementsByClassName(classname)[i]
-      eventLink.setAttribute('href', link)
-    }
-
-
   //****ETSY SECTION--------------------------------------
   //
-  console.log('etsyData: ', etsyData)
+  //console.log('etsyData: ', etsyData)
   // poplulate Etsy data--------------------------
   populateEtsyCards(etsyData)
   function populateEtsyCards(etsyData){
     //loop through cards to populate
     for(let i = 0; i <= 3; i++){
       let listings = etsyData.results
+
       //title
       populateCardTitle(i, listings[i].title, 'event-title etsy')
+
       //description
       populateCardDescription(i, listings[i].description, 'card-text etsy')
+
       //link
       populateCardLink(i, listings[i].url, 'event-link etsy')
+
+      //image
+      let listingId = listings[i].listing_id
+      //create src attribute for the api call with the listing ID
+      let imageRequestURL = "https://openapi.etsy.com/v2/listings/" + listingId + "/images.js?callback=getImageData&api_key=oiatbz455mez7qs7sm7yh0wc"
+      let etsyImageRequest = document.getElementById('etsy-image-request').setAttribute('src', imageRequestURL)
     }
   }
 

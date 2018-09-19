@@ -166,7 +166,18 @@
         if (data.ok) {
           // do something with the data here
           etsyData = data
-          //console.log('etsyData: ', etsyData)
+          console.log('etsyData: ', etsyData)
+        } else {
+            alert(data.error);
+        }
+      }
+
+      var etsyImage
+      function getImageData(data) {
+        if (data.ok) {
+          // do something with the data here
+          etsyImageData = data
+          console.log('etsyImageData: ', etsyImageData)
         } else {
             alert(data.error);
         }
@@ -174,7 +185,9 @@
     </script>
     <!-- Etsy jsonp -->
     <!-- category = 68887494 weddings -->
-    <script src="https://openapi.etsy.com/v2/listings/active.js?category=weddings&callback=getData&api_key=oiatbz455mez7qs7sm7yh0wc"></script>
+    <script src="https://openapi.etsy.com/v2/listings/active.js?category=weddings&category_id=68887494&callback=getData&api_key=oiatbz455mez7qs7sm7yh0wc"></script>
+
+    <script id='etsy-image-request' src="https://openapi.etsy.com/v2/listings/62945521/images.js?callback=getImageData&api_key=oiatbz455mez7qs7sm7yh0wc"></script>
 
 
     <script src='index.js'></script>
