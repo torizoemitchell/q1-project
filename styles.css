@@ -33,12 +33,33 @@ font-family: 'Forum', cursive;*/
   text-align: center;
   padding-top: 20px;
   padding-bottom: 30px;
+  margin-bottom: 0px;
+}
+
+#navbar {
+  background-color: lightgrey;
+  justify-content: center;
+
+}
+
+li {
+  display: inline-block;
+  float: none;
+}
+
+.nav-link {
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  text-decoration: underline;
+
 }
 
 #countdown{
   text-align: center;
   padding: 30px;
   font-family: 'Montserrat', sans-serif;
+  margin-top: 40px;
 }
 
 #confetti-left {
@@ -49,6 +70,7 @@ font-family: 'Forum', cursive;*/
   text-align: center;
   font-family: 'Homemade Apple', cursive;
   font-size: 40px;
+  margin-bottom: 60px;
 
 }
 
