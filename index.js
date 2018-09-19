@@ -169,8 +169,24 @@ document.addEventListener('DOMContentLoaded', function(event){
       //image
       let listingId = listings[i].listing_id
       //create src attribute for the api call with the listing ID
-      let imageRequestURL = "https://openapi.etsy.com/v2/listings/" + listingId + "/images.js?callback=getImageData&api_key=oiatbz455mez7qs7sm7yh0wc"
-      let etsyImageRequest = document.getElementById('etsy-image-request').setAttribute('src', imageRequestURL)
+      let imageRequestURL = "https://openapi.etsy.com/v2/listings/" + listingId + "/images.js?callback=getData&api_key=oiatbz455mez7qs7sm7yh0wc"
+
+      $.ajax({
+        url: imageRequestURL,
+        dataType: 'jsonp',
+        success: function(data) {
+          if (data.ok) {
+            //console.log("etsyImageData: ", data )
+            let imageUrl = data.results[0].url_170x135
+            //console.log("imageUrl: ", imageUrl)
+            let cardImage = document.getElementsByClassName('card-img-top etsy')[i]
+            cardImage.setAttribute('src', imageUrl)
+          } else {
+              alert(data.error);
+          }
+        }
+      });
+
     }
   }
 
