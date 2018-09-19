@@ -110,9 +110,8 @@ document.addEventListener('DOMContentLoaded', function(event){
 
 
           //link---------------------
-          let eventLink = document.getElementsByClassName('event-link')[i]
-          let moreInfo = events[i].url
-          eventLink.setAttribute('href', moreInfo)
+          populateCardLink(i, events[i].url, 'event-link eventbrite')
+
 
           //image---------------------
           let cardImage = document.getElementsByClassName('card-img-top')[i]
@@ -146,6 +145,11 @@ document.addEventListener('DOMContentLoaded', function(event){
       cardText.innerText = desiredInnerText.substr(0, 100)
     }
 
+    function populateCardLink(i, link, classname){
+      let eventLink = document.getElementsByClassName(classname)[i]
+      eventLink.setAttribute('href', link)
+    }
+
 
   //****ETSY SECTION--------------------------------------
   //
@@ -160,6 +164,8 @@ document.addEventListener('DOMContentLoaded', function(event){
       populateCardTitle(i, listings[i].title, 'event-title etsy')
       //description
       populateCardDescription(i, listings[i].description, 'card-text etsy')
+      //link
+      populateCardLink(i, listings[i].url, 'event-link etsy')
     }
   }
 
