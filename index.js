@@ -1,21 +1,41 @@
 //categories: other, fashion, expo, party, networking
 //endpoint: https://www.eventbriteapi.com/v3/events/search/?subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI
+//global functions that need to be availale for test script to access-------------------------------------------------
+function givenDateToUnixTime (givenDate){
+  let countDownYear = givenDate.substring(0,4)
+  let countDownMonth = monthLookup[givenDate.substring(5,7)]
+  let countDownDay = givenDate.substring(8,10)
+  let countDownHour = givenDate.substring(11)
+  let countDownTo = `${countDownDay} ${countDownMonth} ${countDownYear} ${countDownHour}:00`
+  return Date.parse(countDownTo)
+}
+
+function convertDistance(distance){
+  let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  return `${days}d ${hours}h ${minutes}m ${seconds}s`
+}
+
+let monthLookup = {
+  '01': 'Jan',
+  '02': 'Feb',
+  '03': 'Mar',
+  '04': 'Apr',
+  '05': 'May',
+  '06': 'Jun',
+  '07': 'Jul',
+  '08': 'Aug',
+  '09': 'Sep',
+  '10': 'Oct',
+  '11': 'Nov',
+  '12': 'Dec'}
+
 document.addEventListener('DOMContentLoaded', function(event){
   //console.log("ready!")
   //globals-----------------------------------------------
-  let monthLookup = {
-    '01': 'Jan',
-    '02': 'Feb',
-    '03': 'Mar',
-    '04': 'Apr',
-    '05': 'May',
-    '06': 'Jun',
-    '07': 'Jul',
-    '08': 'Aug',
-    '09': 'Sep',
-    '10': 'Oct',
-    '11': 'Nov',
-    '12': 'Dec'}
+
 //timer---------------------------------------------------
   //check to see if a date is stored in local storage, if so, start countown
   if(localStorage.getItem('countdown') !== null){
@@ -34,9 +54,9 @@ document.addEventListener('DOMContentLoaded', function(event){
     //set date we're counting down to
     //convert format of given date to Unix time (miliseconds)
     let givenDate = document.getElementsByClassName('your-date')[0].value
-    console.log("givenDate: ", givenDate)
+    console.log("givenDate in unix: ", Date.parse(givenDate))
     let countDownToInMS = givenDateToUnixTime(givenDate)
-
+    console.log("countDownToInMS: ", countDownToInMS)
     //update the timer every 1 second
     let timerInterval = setInterval(function(){
       //get today's date and time in Unix time
@@ -56,23 +76,6 @@ document.addEventListener('DOMContentLoaded', function(event){
   }, 1000)
   }
 
-  function givenDateToUnixTime (givenDate){
-    let countDownYear = givenDate.substring(0,4)
-    let countDownMonth = monthLookup[givenDate.substring(5,7)]
-    let countDownDay = givenDate.substring(8,10)
-    let countDownHour = givenDate.substring(11)
-    let countDownTo = `${countDownDay} ${countDownMonth} ${countDownYear} ${countDownHour}:00`
-    return Date.parse(countDownTo)
-  }
-
-  function convertDistance(distance){
-    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    return `${days}d ${hours}h ${minutes}m ${seconds}s`
-  }
-
 
 //get data from eventbrite---------------------------------------------
 
@@ -88,11 +91,11 @@ document.addEventListener('DOMContentLoaded', function(event){
   function populateCards(url){
     axios.get(url)
       .then(function(response){
-        //loop to populate cards
+        //loop to populate the first 4 cards
         for(let i = 0; i <= 3; i++){
           //title----------------
           let events = response.data.events
-          let cardTitle = document.getElementsByClassName('event-title')[i]
+          let cardTitle = document.getElementsByClassName('event-title eventbrite')[i]
           //console.log('cardTitle: ', cardTitle )
           cardTitle.innerText = events[i].name.text.substring(0,80)
 
@@ -126,7 +129,9 @@ document.addEventListener('DOMContentLoaded', function(event){
       })
     }
     populateCards(defaultUrl)
+    function populateCardTitle(desiredInnerText){
 
+    }
 
   // ----filter location----------------------------------------------
   let filterLocationsButton = document.getElementsByClassName('filter-results')[0]
@@ -148,8 +153,7 @@ document.addEventListener('DOMContentLoaded', function(event){
   }
 
 //get data from Etsy---------------------------------------------------------------
-  console.log("etsydata2: ", etsyData)
-  console.log('type of etsyData: ', (typeof etsyData))
+  console.log('etsyData: ', etsyData)
 
 
 
