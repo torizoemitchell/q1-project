@@ -70,8 +70,18 @@ li {
   text-align: center;
   font-family: 'Homemade Apple', cursive;
   font-size: 40px;
-  margin-bottom: 60px;
 
+}
+#your-date-hidden {
+  margin-top: 60px;
+  text-align: center;
+  font-family: 'Homemade Apple', cursive;
+  font-size: 20px;
+}
+
+.change-date-button {
+  margin-bottom: 60px;
+  text-align: center;
 }
 
 #location {

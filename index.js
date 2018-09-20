@@ -5,8 +5,17 @@ function givenDateToUnixTime (givenDate){
   let countDownMonth = monthLookup[givenDate.substring(5,7)]
   let countDownDay = givenDate.substring(8,10)
   let countDownHour = givenDate.substring(11)
+  //it's recommended to use Date.parse with this format, which is why the previous steps are neccessary/best practice:
   let countDownTo = `${countDownDay} ${countDownMonth} ${countDownYear} ${countDownHour}:00`
   return Date.parse(countDownTo)
+}
+
+function givenDateToHumanDate (givenDate){
+  let countDownYear = givenDate.substring(0,4)
+  let countDownMonth = monthLookup[givenDate.substring(5,7)]
+  let countDownDay = givenDate.substring(8,10)
+  let countDownHour = militaryToStandardTime(givenDate.substring(11))
+  return `${countDownMonth} ${countDownDay},  ${countDownYear} at ${countDownHour}`
 }
 
 function convertDistance(distance){
@@ -141,6 +150,7 @@ let monthLookup = {
       });
   }
 
+
   //filter location in eventbrite section:
   function filterLocation(event){
     event.preventDefault()
@@ -156,24 +166,40 @@ let monthLookup = {
     localStorage.setItem('nearestMajorCity', nearestMajorCity)
   }
 
+
+
+
 //DO THE THINGS*********************************************
 //When the page is loaded, begin DOM manipulation
 document.addEventListener('DOMContentLoaded', function(event){
 
 
   //TIMER***************************************************
+  //check to see if there is data from localStorage, if it's there, start the countdown using that date-----------
+  if(localStorage.getItem('countDownToInMS') !== null){
+    startCountDown(localStorage.getItem('countDownToInMS'), localStorage.getItem('givenDateHumanReadable'))
+  }
 
+  let timerSection = document.getElementById('timer')
   //add event Listener to countdown button
-  let countDownForm = document.getElementById('countdown')
+  var countDownForm = document.getElementById('countdown')
   countDownForm.addEventListener('submit', startInitialCountDown)
+
   function startInitialCountDown(event){
     event.preventDefault()
     //set date we're counting down to
     //convert format of given date to Unix time (miliseconds)
     let givenDate = document.getElementsByClassName('your-date')[0].value
-    console.log("givenDate in unix: ", Date.parse(givenDate))
+    let givenDateHumanReadable = givenDateToHumanDate(givenDate)
+    localStorage.setItem("givenDateHumanReadable", givenDateHumanReadable)
     let countDownToInMS = givenDateToUnixTime(givenDate)
-    console.log("countDownToInMS: ", countDownToInMS)
+    //stores miliseconds as a string:
+    localStorage.setItem("countDownToInMS", countDownToInMS)
+    startCountDown(countDownToInMS, givenDateHumanReadable)
+
+  }
+
+  function startCountDown(countDownToInMS, givenDateHumanReadable){
     //update the timer every 1 second
     let timerInterval = setInterval(function(){
       //get today's date and time in Unix time
@@ -183,14 +209,36 @@ document.addEventListener('DOMContentLoaded', function(event){
       console.log("distance: ", distance)
       //convert distance into days/hours/mins/seconds
       displayTimerText = convertDistance(distance)
-
       //display
       let displayTimer = document.getElementById('timer')
       console.log('displayTimer: ', displayTimer)
       displayTimer.innerText = displayTimerText
-      localStorage.setItem('countdown', displayTimerText)
-
-  }, 1000)
+    }, 1000)
+    //show date
+    let yourDateUnhidden = document.getElementById('your-date-hidden')
+    yourDateUnhidden.innerText = `your date :       ${givenDateHumanReadable}`
+    //hide form and add change button
+    let countDownForm = document.getElementById('countdown')
+    console.log('countdownForm: ', countDownForm)
+    countDownForm.style.display = 'none'
+    let changeDateButton = document.getElementsByClassName('btn-sm btn-outline-dark change-date')[0]
+    changeDateButton.removeAttribute('hidden')
+    changeDateButton.addEventListener('click', () =>{
+      //clear all values
+      givenDate = ''
+      localStorage.removeItem('countDownToInMS')
+      localStorage.removeItem('givenDateHumanReadable')
+      //hide countdown
+      let yourDateUnhidden = document.getElementById('your-date-hidden')
+      yourDateUnhidden.innerText = ''
+      clearInterval(timerInterval)
+      let displayTimer = document.getElementById('timer')
+      displayTimer.innerText = ''
+      //show form again
+      countDownForm.style.display = 'block'
+      //hide change Date changeDate
+      changeDateButton.setAttribute('hidden', true)
+    })
   }
 
 

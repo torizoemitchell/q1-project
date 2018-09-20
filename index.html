@@ -33,15 +33,20 @@
     </div>
     <!-- end navbar -->
 
-    <form id='countdown'>
-      Your Wedding Date:
-      <input type='datetime-local' class='your-date' required>
-      <button type="submit" class="btn-sm btn-outline-dark count-down">Countdown!</button>
-    </form>
+      <form id='countdown'>
+        Your Wedding Date:
+        <input type='datetime-local' class='your-date' required>
+        <button type="submit" class="btn-sm btn-outline-dark count-down">Countdown!</button>
+      </form>
 
-    <p id='timer'>
-      00d 00h 00m 00s
-    </p>
+
+        <p id='your-date-hidden'></p>
+        <p id='timer'></p>
+        <div class='change-date-button'>
+          <button type="submit" class="btn-sm btn-outline-dark change-date" hidden>Change Date</button>
+        </div>
+      
+
 <!-- eventbrite -->
     <div id='eventbrite' class='container'>
       <p class='section-description'>
