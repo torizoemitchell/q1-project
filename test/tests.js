@@ -17,10 +17,17 @@ describe("countdown works properly", () => {
   })
 })
 
-describe("month Lookup", () => {
+describe("month lookup", () => {
   it("properly assigns a month name based on month (number) from date", () => {
     expect(monthLookup['01']).to.equal('Jan');
     expect(monthLookup['10']).to.equal('Oct');
+  })
+})
+
+describe("displaying event time", () => {
+  it("properly converts given military time to standard time", () => {
+    expect(militaryToStandardTime('13:00')).to.equal('1:00pm')
+    expect(militaryToStandardTime('10:00')).to.equal('10:00am')
   })
 })
 

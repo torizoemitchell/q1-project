@@ -1,4 +1,5 @@
-//global functions that need to be availale for test script to access-------------------------------------------------
+//THINGS YOU CAN DO*****************************************
+//global scope, so the test script can access
 function givenDateToUnixTime (givenDate){
   let countDownYear = givenDate.substring(0,4)
   let countDownMonth = monthLookup[givenDate.substring(5,7)]
@@ -30,6 +31,63 @@ let monthLookup = {
   '11': 'Nov',
   '12': 'Dec'}
 
+  function militaryToStandardTime(militaryTime){
+    let retString = ''
+    let hours = parseInt(militaryTime.substring(0,2))
+    let mins = militaryTime.substring(3)
+    if(hours === 12){
+      retString = `${hours}:${mins}pm`
+    }else if(hours > 12){
+      let standardHour = (hours - 12)
+      retString = `${standardHour}:${mins}pm`
+    }else if(hours < 12){
+      retString = `${hours}:${mins}am`
+    }
+    return retString
+  }
+
+  //functions to populate entire sections of cards:
+  function populateEtsyCards(etsyData){
+    //loop through cards to populate
+    for(let i = 0; i <= 3; i++){
+      let listings = etsyData.results
+      //title
+      populateCardTitle(i, listings[i].title, 'event-title etsy')
+
+      //description
+      populateCardDescription(i, listings[i].description, 'card-text etsy')
+
+      //link
+      populateCardLink(i, listings[i].url, 'event-link etsy')
+
+      //image
+      populateEtsyImage(i, listings[i].listing_id, 'card-img-top etsy')
+    }
+  }
+  function populateEventBriteCards(url){
+    axios.get(url)
+      .then(function(response){
+        //loop to populate the first 4 cards
+        for(let i = 0; i <= 3; i++){
+          let events = response.data.events
+          //title----------------
+          populateCardTitle(i, events[i].name.text.substring(0,80), 'event-title eventbrite')
+
+          //description------------
+          populateCardDescription(i, events[i].description.text, 'card-text eventbrite')
+
+          //link---------------------
+          populateCardLink(i, events[i].url, 'event-link eventbrite')
+
+          //image---------------------
+          populateEventBriteImage(i, events[i].logo.url, 'card-img-top eventbrite')
+
+          //time-------------------------
+          populateCardWithStandardTime(i, events[i].start.local, 'event-time')
+        }
+      })
+    }
+
   //use populate functions in a for loop, i is the iterator
   function populateCardTitle(i, desiredInnerText, classname){
     let cardTitle = document.getElementsByClassName(classname)[i]
@@ -46,14 +104,69 @@ let monthLookup = {
     eventLink.setAttribute('href', link)
   }
 
+  function populateCardWithStandardTime(i, desiredInnerText, classname){
+    let eventTime = desiredInnerText
+    let cardTime = document.getElementsByClassName(classname)[i]
+    let eventYear = eventTime.substring(0,4)
+    let eventDay = eventTime.substring(8,10)
+    let eventMonth = eventTime.substring(5,7)
+    let eventHour = eventTime.substring(11,16)
+    let standardHour = militaryToStandardTime(eventHour)
+    cardTime.innerText = `${monthLookup[eventMonth]} ${eventDay}, ${eventYear} ${standardHour}`
+  }
+
+  //we DO NOT populate Images the same way from eventbrite and etsy apis
+  function populateEventBriteImage(i, imageUrl, classname){
+    let cardImage = document.getElementsByClassName(classname)[i]
+    cardImage.setAttribute('src', imageUrl)
+  }
+
+  function populateEtsyImage(i, listingId, classname){
+      let imageRequestURL = "https://openapi.etsy.com/v2/listings/" + listingId + "/images.js?callback=getData&api_key=oiatbz455mez7qs7sm7yh0wc"
+      //makes a request to the api to get the images associated with the listing Id
+      $.ajax({
+        url: imageRequestURL,
+        dataType: 'jsonp',
+        success: function(data) {
+          if (data.ok) {
+            //console.log("etsyImageData: ", data )
+            let imageUrl = data.results[0].url_170x135
+            //console.log("imageUrl: ", imageUrl)
+            let cardImage = document.getElementsByClassName(classname)[i]
+            cardImage.setAttribute('src', imageUrl)
+          } else {
+              alert(data.error);
+          }
+        }
+      });
+  }
+
+  //filter location in eventbrite section:
+  function filterLocation(event){
+    event.preventDefault()
+    let nearestMajorCity =
+    document.getElementsByClassName('nearest-major-city')[0].value
+    //determine new URL based on input
+    let filteredUrl = 'https://www.eventbriteapi.com/v3/events/search/?sort_by=distance&location.address=' + nearestMajorCity + '&subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
+    //call populate cards with new url
+    populateEventBriteCards(filteredUrl)
+    //save location info in local storage
+    localStorage.setItem('locationUrl', filteredUrl)
+    console.log("nearestMajorCity: ", nearestMajorCity)
+    localStorage.setItem('nearestMajorCity', nearestMajorCity)
+  }
+
+//DO THE THINGS*********************************************
 //When the page is loaded, begin DOM manipulation
 document.addEventListener('DOMContentLoaded', function(event){
 
-  //timer---------------------------------------------------
+
+  //TIMER***************************************************
+
   //add event Listener to countdown button
   let countDownForm = document.getElementById('countdown')
-  countDownForm.addEventListener('submit', startCountDown)
-  function startCountDown(event){
+  countDownForm.addEventListener('submit', startInitialCountDown)
+  function startInitialCountDown(event){
     event.preventDefault()
     //set date we're counting down to
     //convert format of given date to Unix time (miliseconds)
@@ -81,8 +194,8 @@ document.addEventListener('DOMContentLoaded', function(event){
   }
 
 
-  //****EVENTBRITE SECTION----------------------------------
-  //
+  //EVENTBRITE SECTION**************************************
+
   // check to see if there is data from localStorage--------
   if(localStorage.getItem('locationUrl') === null){
     var defaultUrl = 'https://www.eventbriteapi.com/v3/events/search/?sort_by=distance&location.address=Denver&subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
@@ -93,106 +206,15 @@ document.addEventListener('DOMContentLoaded', function(event){
 
   //filter location-----------------------------------------
   let filterLocationsButton = document.getElementsByClassName('filter-results')[0]
-
   filterLocationsButton.addEventListener('click', filterLocation)
-
-  function filterLocation(event){
-    event.preventDefault()
-    let nearestMajorCity =
-    document.getElementsByClassName('nearest-major-city')[0].value
-    //determine new URL based on input
-    let filteredUrl = 'https://www.eventbriteapi.com/v3/events/search/?sort_by=distance&location.address=' + nearestMajorCity + '&subcategories=6003&token=VZOCWIOLMEUN4MRKIOHI'
-    //call populate cards with new url
-    populateEventBriteCards(filteredUrl)
-    //save location info in local storage
-    localStorage.setItem('locationUrl', filteredUrl)
-    console.log("nearestMajorCity: ", nearestMajorCity)
-    localStorage.setItem('nearestMajorCity', nearestMajorCity)
-  }
 
   //populate Eventbrite cards with default url--------------
   populateEventBriteCards(defaultUrl)
-  function populateEventBriteCards(url){
-    axios.get(url)
-      .then(function(response){
-        //loop to populate the first 4 cards
-        for(let i = 0; i <= 3; i++){
-          let events = response.data.events
-          //title----------------
-          populateCardTitle(i, events[i].name.text.substring(0,80), 'event-title eventbrite')
-
-          //description------------
-          populateCardDescription(i, events[i].description.text, 'card-text eventbrite')
 
 
-          //link---------------------
-          populateCardLink(i, events[i].url, 'event-link eventbrite')
+  //ETSY SECTION********************************************
 
-
-          //image---------------------
-          let cardImage = document.getElementsByClassName('card-img-top')[i]
-          let eventImage = events[i].logo.url
-          cardImage.setAttribute('src', eventImage)
-
-          //time-------------------------
-          let cardTime = document.getElementsByClassName('event-time')[i]
-          let eventTime = events[i].start.local
-          let eventYear = eventTime.substring(0,4)
-          let eventDay = eventTime.substring(8,10)
-          //Bug here?
-          let eventMonth = eventTime.substring(5,7)
-          let eventHour = eventTime.substring(11,16)
-          cardTime.innerText = `${monthLookup[eventMonth]} ${eventDay}, ${eventYear} ${eventHour}`
-        }
-      })
-    }
-
-  //****ETSY SECTION--------------------------------------
-  //
-  //console.log('etsyData: ', etsyData)
-  // poplulate Etsy data--------------------------
+  // poplulate Etsy data------------------------------------
   populateEtsyCards(etsyData)
-  function populateEtsyCards(etsyData){
-    //loop through cards to populate
-    for(let i = 0; i <= 3; i++){
-      let listings = etsyData.results
-
-      //title
-      populateCardTitle(i, listings[i].title, 'event-title etsy')
-
-      //description
-      populateCardDescription(i, listings[i].description, 'card-text etsy')
-
-      //link
-      populateCardLink(i, listings[i].url, 'event-link etsy')
-
-      //image
-      let listingId = listings[i].listing_id
-      //create src attribute for the api call with the listing ID
-      let imageRequestURL = "https://openapi.etsy.com/v2/listings/" + listingId + "/images.js?callback=getData&api_key=oiatbz455mez7qs7sm7yh0wc"
-
-      $.ajax({
-        url: imageRequestURL,
-        dataType: 'jsonp',
-        success: function(data) {
-          if (data.ok) {
-            //console.log("etsyImageData: ", data )
-            let imageUrl = data.results[0].url_170x135
-            //console.log("imageUrl: ", imageUrl)
-            let cardImage = document.getElementsByClassName('card-img-top etsy')[i]
-            cardImage.setAttribute('src', imageUrl)
-          } else {
-              alert(data.error);
-          }
-        }
-      });
-
-    }
-  }
-
-
-
-
-
 
 })
