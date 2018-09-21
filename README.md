@@ -1,6 +1,6 @@
 #Guide Bride:
 This is a site for brides, grooms, bride's maids, best men, mothers and fathers of the bride or groom, and anyone else who is involved in panning a wedding.
-![home](https://github.com/torizoemitchell/q1-project/imgs/home.png)
+![image](https://user-images.githubusercontent.com/41760027/45891627-4a512f00-bd83-11e8-88ab-a571226ccb36.png)
 
 #Fun Features:
 Users are able to input the date of the wedding and see a clock ticking down to the exact moment of the event. You are able to use the navigation bar to jump to sections of the page.
