@@ -21,7 +21,6 @@ font-family: 'Forum', cursive;*/
 .container {
   flex-wrap: wrap;
   border: 2.5px solid black;
-  justify-content: space-between;
   padding-right: 25px;
   padding-left: 25px;
   padding-bottom: 25px;
@@ -66,6 +65,11 @@ li {
 
 }
 
+.your-date {
+  width: auto;
+  display: inline;
+}
+
 #timer {
   text-align: center;
   font-family: 'Homemade Apple', cursive;
@@ -89,6 +93,8 @@ li {
 }
 .nearest-major-city {
   background-color: white;
+  width: auto;
+  display: inline;
 }
 
 .section-description {
