@@ -8,6 +8,7 @@ Users are able to input the date of the wedding and see a clock ticking down to 
 
 #Page Contents:
 The 2 sections of the site include Bridal Events & Wedding Expos, where you are able to filter upcoming events to the closest major city, and Fresh Ideas, which presents products being sold in the "weddings" category online.
+![image](https://user-images.githubusercontent.com/41760027/45891779-acaa2f80-bd83-11e8-899c-5b3e621c0843.png)
 
 #Local Storage:
 The countdown you start will be stored and will resume the next time you visit the site. Your location filters for upcoming events/expos will be remembered and automatically loaded as well.
